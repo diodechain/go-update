@@ -5,8 +5,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/diodechain/go-update"
 	"github.com/google/go-github/github"
-	"github.com/tj/go-update"
 )
 
 // Store is the store implementation.
