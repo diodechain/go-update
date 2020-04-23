@@ -5,8 +5,8 @@ import (
 	"log"
 	"runtime"
 
-	"github.com/tj/go-update"
-	"github.com/tj/go-update/progress"
+	"github.com/diodechain/go-update"
+	"github.com/diodechain/go-update/progress"
 )
 
 func Example() {
