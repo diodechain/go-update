@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/apex/log"
@@ -184,6 +185,28 @@ func (a *Asset) DownloadProxy(proxy Proxy) (string, error) {
 
 	log.Debugf("copied")
 	return f.Name(), nil
+}
+
+// Restart runs the command replacing the current running app
+func Restart(cmd string) error {
+	if runtime.GOOS != "windows" {
+		err := syscall.Exec(cmd, os.Args, os.Environ())
+		if err != nil {
+			return errors.Wrap(err, "restarting")
+		}
+	}
+
+	// Windows will run into this
+	proc, err := os.StartProcess(cmd, os.Args, &os.ProcAttr{Files: []*os.File{os.Stdin, os.Stdout, os.Stderr}})
+	if err != nil {
+		return errors.Wrap(err, "restarting")
+	}
+	state, err := proc.Wait()
+	if state == nil {
+		return errors.Wrap(err, "waiting process")
+	}
+	os.Exit(state.ExitCode())
+	return nil
 }
 
 // copyFile copies the contents of the file named src to the file named

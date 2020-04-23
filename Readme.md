@@ -15,6 +15,9 @@ from GitHub based on the user's current version and operating system. Used by co
     - 'v2.0' == 'v2'
     - 'v2.0.0.0.0' == 'v2'
 
+3. Added windows support. (update.InstallTo() used to fail there)
+4. Added update.Restart() method
+
 ---
 
 [![GoDoc](https://godoc.org/github.com/diodechain/go-update?status.svg)](https://godoc.org/github.com/diodechain/go-update)
