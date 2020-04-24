@@ -188,25 +188,18 @@ func (a *Asset) DownloadProxy(proxy Proxy) (string, error) {
 }
 
 // Restart runs the command replacing the current running app
-func Restart(cmd string) error {
+func Restart(cmd string) {
 	if runtime.GOOS != "windows" {
 		err := syscall.Exec(cmd, os.Args, os.Environ())
 		if err != nil {
-			return errors.Wrap(err, "restarting")
+			log.Errorf("Couldn't restart after update, please start the program again. %v", err)
+			os.Exit(1)
 		}
 	}
 
 	// Windows will run into this
-	proc, err := os.StartProcess(cmd, os.Args, &os.ProcAttr{Files: []*os.File{os.Stdin, os.Stdout, os.Stderr}})
-	if err != nil {
-		return errors.Wrap(err, "restarting")
-	}
-	state, err := proc.Wait()
-	if state == nil {
-		return errors.Wrap(err, "waiting process")
-	}
-	os.Exit(state.ExitCode())
-	return nil
+	log.Errorf("Can't restart automatically on windows after update, please start the program again.")
+	os.Exit(1)
 }
 
 // copyFile copies the contents of the file named src to the file named
