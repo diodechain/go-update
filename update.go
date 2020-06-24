@@ -199,7 +199,7 @@ func Restart(cmd string) {
 
 	// Windows will run into this
 	log.Errorf("Can't restart automatically on windows after update, please start the program again.")
-	os.Exit(1)
+	os.Exit(0)
 }
 
 // copyFile copies the contents of the file named src to the file named
