@@ -58,7 +58,7 @@ func (vsn version) biggerEquals(other version) bool {
 
 // GetRelease returns the specified release or ErrNotFound.
 func (s *Store) GetRelease(version string) (*update.Release, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	gh := github.NewClient(nil)
@@ -78,7 +78,7 @@ func (s *Store) GetRelease(version string) (*update.Release, error) {
 
 // LatestReleases returns releases newer than Version, or nil.
 func (s *Store) LatestReleases() (latest []*update.Release, err error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	gh := github.NewClient(nil)
